@@ -1,0 +1,65 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/blogs":
+    post:
+      summary: Creates a blog
+      tags:
+      - Blogs
+      consumes:
+      - application/json
+      - application/xml
+      parameters:
+      - name: blog
+        in: body
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            content:
+              type: string
+          required:
+          - title
+          - content
+      responses:
+        '201':
+          description: blog created
+        '422':
+          description: invalid request
+  "/blogs/{id}":
+    get:
+      summary: Retrieves a blog
+      tags:
+      - Blogs
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+      responses:
+        '200':
+          description: blog found
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+              content:
+                type: string
+            required:
+            - id
+            - title
+            - content
+        '404':
+          description: blog not found
+        '406':
+          description: unsupported accept header
